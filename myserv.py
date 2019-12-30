@@ -65,7 +65,7 @@ def on_new_client(clientsocket,addr):
                 clientsocket.send(ret1)
         elif str_data[8:10] == '13':
             first_data = str_data[2:6]
-            last = str_data[-4:]
+            last = str_data[-5:]
             print('0a0d',last)
             print('first-data',first_data)
             len = '0513'
