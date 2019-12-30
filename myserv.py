@@ -30,7 +30,7 @@ def on_new_client(clientsocket,addr):
         #p = hex(crc16(imei))
         str_data = str(imei)
         print('01',str_data[8:10])
-        if str_data[4:6] == '01':
+        if str_data[8:10] == '01':
                 parsed_data = str_data[26:30]
                 first_data = str_data[2:6]    #7878
                 length = '0501'
@@ -63,7 +63,7 @@ def on_new_client(clientsocket,addr):
                 print('ret - ',ret1)
                 print('ret type - ',type(ret1))
                 clientsocket.send(ret1)
-        elif str_data[6:8] == '13':
+        elif str_data[8:10] == '13':
             first_data = str_data[2:6]
             print('first-data',first_data)
             len = '0513'
