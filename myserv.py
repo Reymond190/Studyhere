@@ -79,10 +79,12 @@ def on_new_client(clientsocket,addr):
             error_check = ra[2:6]
             print('errror_check',error_check)
             finalout = first_data+final+error_check+last
-            print('final',finalout)
-            print('got status data packet')
-            clientsocket.close()
+            print('final', finalout)
+            ret2 = str.encode(finalout)
+            ret1 = binascii.unhexlify(ret2)
+            clientsocket.send(ret1)
         else:
+            print('something new ----------',str_data)
             print('closing connection....')
             clientsocket.close()
  except socket.error as message:
@@ -101,6 +103,7 @@ print(sys.stderr, '\nwaiting for a connection')
 s.bind((host, port))        # Bind to the port
 s.listen(5)     # Now wait for client connection.
 unpacker = struct.Struct('I 2s f')
+
 
 while True:
    c, addr = s.accept()     # Establish connection with client.
