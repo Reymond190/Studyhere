@@ -65,8 +65,7 @@ def on_new_client(clientsocket,addr):
                 clientsocket.send(ret1)
         elif str_data[8:10] == '13':
             first_data = str_data[2:6]
-            last = str_data[-5:]
-            print('0a0d',last)
+            last = '0a0d'
             print('first-data',first_data)
             len = '0513'
             print('length',len)
@@ -81,10 +80,13 @@ def on_new_client(clientsocket,addr):
             finalout = first_data+final+error_check+last
             print('final', finalout)
             ret2 = str.encode(finalout)
+            print('encode',ret2)
             ret1 = binascii.unhexlify(ret2)
+            print('ret - ', ret1)
+            print('ret type - ', type(ret1))
             clientsocket.send(ret1)
         else:
-            print('something new ----------',str_data)
+            print('something new----',str_data)
             print('closing connection....')
             clientsocket.close()
  except socket.error as message:
