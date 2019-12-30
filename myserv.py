@@ -31,7 +31,7 @@ def on_new_client(clientsocket,addr):
         str_data = str(imei)
         if str_data[6:8] == '01':
                 parsed_data = str_data[26:30]
-                first_data = str_data[2:6]
+                first_data = str_data[2:6] #7878
                 length = '0501'
                 #print('first-data', first_data)
                 #print('length', length)
@@ -63,7 +63,18 @@ def on_new_client(clientsocket,addr):
                 print('ret type - ',type(ret1))
                 clientsocket.send(ret1)
         elif str_data[6:8] == '13':
+            first_data = str_data[2:6]
+            print('first-data',first_data)
+            len = '0513'
+            print('length',len)
+            serial_no = str_data[18:22]
+            print('serial_no',serial_no)
+            final = first_data+len+serial_no
+            print('final',final)
             print('inside elif')
+            clientsocket.close()
+        else:
+            print('closing connection....')
             clientsocket.close()
  except socket.error as message:
   print(message)
