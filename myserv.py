@@ -30,9 +30,9 @@ def on_new_client(clientsocket,addr):
         #p = hex(crc16(imei))
         str_data = str(imei)
         print('01',str_data[6:8])
-        if str_data[6:8] == '01':
+        if str_data[4:6] == '01':
                 parsed_data = str_data[26:30]
-                first_data = str_data[2:6] #7878
+                first_data = str_data[2:6]    #7878
                 length = '0501'
                 #print('first-data', first_data)
                 #print('length', length)
