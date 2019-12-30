@@ -66,6 +66,7 @@ def on_new_client(clientsocket,addr):
         elif str_data[8:10] == '13':
             first_data = str_data[2:6]
             last = str_data[-4:]
+            print('0a0d',last)
             print('first-data',first_data)
             len = '0513'
             print('length',len)
@@ -74,11 +75,11 @@ def on_new_client(clientsocket,addr):
             final = len+serial_no
             re = str.encode(final)
             crc16 = libscrc.x25(binascii.unhexlify(re))
-            ra = hex(crc16)
-            error_check = str(ra)
+            ra = str(hex(crc16))
+            error_check = ra[2:6]
             print('errror_check',error_check)
-            final = first_data+final+error_check+last
-            print('final',final)
+            finalout = first_data+final+error_check+last
+            print('final',finalout)
             print('got status data packet')
             clientsocket.close()
         else:
