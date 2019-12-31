@@ -85,6 +85,10 @@ def on_new_client(clientsocket,addr):
             print('ret - ', ret1)
             print('ret type - ', type(ret1))
             clientsocket.send(ret1)
+        # elif str_data[8:10] == '13':
+        #     first_data = str_data[2:6]
+        #     last = '0a0d'
+
         else:
             print('something new----',str_data)
             print('closing connection....')

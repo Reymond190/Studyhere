@@ -2,25 +2,170 @@
 # import libscrc
 
 # crc16 = libscrc.modbus(b'1234')
-# print(hex('0d010866968031423081000f'))
+'''b'7878(startbit)
+
+----------------------------
+
+ 1f (len)
+
+----------------------------
+
+ 12(protocolno)
+
+------------------------------
+
+13
+0c
+06
+07
+33
+ 2e (date)
+
+-------------------------------
+
+c9(satellites)
+
+------------------------------
+
+01 62 ef  37 (lat)
+
+------------------------------
+
+08
+99
+42
+91(long)
+
+-----------------------------
+
+00(speed)
+
+-----------------------------
+
+54
+4c(course status)
+
+----------------------------
+
+01
+94(mcc)
+
+00(mnc)
+
+cb
+4a(lac)
+
+00
+64
+a2(cell id)
+
+--------------------------
+00
+0f(serial_no)
+
+==============
+fe
+ed(error_check)
+
+==============
+
+0d0a (stop_bit) '''
+
+# 7878 1f12    13 0c 13 07 2f 35   c9    01 62 7c cd    08 9b 79 31    02     5482 0194 00 01f9 00da5f 0011 b533 0d0a
 
 
-s = '78780d0108669680314230810009fb880d0a'
+'''
+
+len = s[4:7]
+
+protocolno = s[ 6 : 9 ]
+
+
+date = s[ 8 : 21 ]
+
+satellites = s[ 20 : 23 ]
+
+lat = s[ 22 : 31 ]
+
+long = s[ 30 : 39 ]
+
+speed = s[ 38 : 41 ]
+
+course_status = s[ 40 : 45 ]
+
+mcc = s[ 44 : 49 ]
+
+mnc = s[ 48 : 51 ]
+
+lac = s[ 50 : 55 ]
+
+cell_id = s[ 54 : 61 ]
+
+serial_no = s[ 60 : 65 ]
 
 
 
-p = '78780A134401040001000508450D0A'
-print(p[-4:])
 
 
 
+'''
 
-l = '78780a130405040002002046240d0a'
+sos = '78781f12130c13072f35c901627ccd089b793102548201940001f900da5f.0011,b5330d0a'
 
-sd = '78780a130405040002001cbdcb0d0a'
+s = sos
+print(sos.find('.'))
 
-print('serial --',p[18:22],l[18:22],sd[18:22])
+print(sos[:sos.find('.')])
+
+a = sos.find('.')
+b = sos.find(',')
+print(sos[a+1:b])
 
 
 
-print('lenght ---------',len(l),len(sd),len(p))
+len = s[4:7]
+
+protocolno = s[ 6 : 9 ]
+
+
+date = s[ 8 : 21 ]
+
+satellites = s[ 20 : 23 ]
+
+lat = s[ 22 : 31 ]
+
+long = s[ 30 : 39 ]
+
+speed = s[ 38 : 41 ]
+
+course_status = s[ 40 : 45 ]
+
+mcc = s[ 44 : 49 ]
+
+mnc = s[ 48 : 51 ]
+
+lac = s[ 50 : 55 ]
+
+cell_id = s[ 54 : 61 ]
+
+serial_no = s[ 60 : 65 ]
+
+
+print('serial_no =','s[',a,':',b,']')
+
+print('len -',len,'__',
+      'protocolno',protocolno,'__',
+      'date',date,'__',
+      'satellites',satellites,'__',
+      'lat',lat,'__',
+      'long',long,'__',
+      'speed',speed,'__',
+      'course_status',course_status,'__',
+      'mcc ',mcc,'__',
+      'mnc ',mnc,'__',
+      'lac ',lac,'__',
+      'cell_id ',cell_id,'__',
+      'serial_no',serial_no,'__')
+
+
+
