@@ -150,6 +150,8 @@ cell_id = s[ 54 : 61 ]
 
 serial_no = s[ 60 : 65 ]
 
+two = s[8:10]
+
 
 print('serial_no =','s[',a,':',b,']')
 
