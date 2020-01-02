@@ -87,11 +87,39 @@ def on_new_client(clientsocket,addr):
             clientsocket.send(ret1)
 
         elif str_data[8:10] == '13':
-            first_data = str_data[2:6]
-            last = '0a0d'
-            len = str_data[4:7]
-            print(str_data)
-            print('len',len)
+            p = str_data[1::]
+            p = p.replace("'", "")
+            print('after', p)
+            s = p
+            len = s[4:7]
+            protocolno = s[6: 9]
+            date = s[8: 21]
+            satellites = s[20: 23]
+            lat = s[22: 31]
+            long = s[30: 39]
+            speed = s[38: 41]
+            course_status = s[40: 45]
+            mcc = s[44: 49]
+            mnc = s[48: 51]
+            lac = s[50: 55]
+            cell_id = s[54: 61]
+            serial_no = s[60: 65]
+
+            print('len -', len, '__',
+                  'protocolno', protocolno, '__',
+                  'date', date, '__',
+                  'satellites', satellites, '__',
+                  'lat', lat, '__',
+                  'long', long, '__',
+                  'speed', speed, '__',
+                  'course_status', course_status, '__',
+                  'mcc ', mcc, '__',
+                  'mnc ', mnc, '__',
+                  'lac ', lac, '__',
+                  'cell_id ', cell_id, '__',
+                  'serial_no', serial_no, '__')
+
+
 
         else:
             print('something new----',str_data)
@@ -100,6 +128,8 @@ def on_new_client(clientsocket,addr):
  except socket.error as message:
   print(message)
   clientsocket.close()
+
+
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 

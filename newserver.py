@@ -64,19 +64,25 @@ def on_new_client(clientsocket,addr):
     print(message)
     clientsocket.close()
 
+
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
 
 host = socket.gethostname()  # Get local machine name
 print(host)
 port = 49153  # Reserve a port for your service.
 
+
 print('Server started!')
 print(sys.stderr, '\nwaiting for a connection')
+
 
 s.bind((host, port))  # Bind to the port
 s.listen(5)  # Now wait for client connection.
 
+
 unpacker = struct.Struct('I 2s f')
+
 
 while True:
     c, addr = s.accept()  # Establish connection with client.

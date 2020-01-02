@@ -110,7 +110,7 @@ serial_no = s[ 60 : 65 ]
 
 '''
 
-sos = '78781f12130c13072f35c901627ccd089b793102548201940001f900da5f.0011,b5330d0a'
+sos = '78781f12140102063807c70162859d089b78f802540b01940001f900da5f001a8ce40d0a'
 
 s = sos
 print(sos.find('.'))
@@ -123,37 +123,36 @@ print(sos[a+1:b])
 
 
 
-len = s[4:7]
+len = s[4:6]
 
-protocolno = s[ 6 : 9 ]
+protocolno = s[ 6 : 8 ]
 
 
-date = s[ 8 : 21 ]
+date = s[ 8 : 20 ]
 
-satellites = s[ 20 : 23 ]
+satellites = s[ 20 : 22 ]
 
-lat = s[ 22 : 31 ]
+lat = s[ 22 : 30 ]
 
-long = s[ 30 : 39 ]
+long = s[ 30 : 38 ]
 
-speed = s[ 38 : 41 ]
+speed = s[ 38 : 40 ]
 
-course_status = s[ 40 : 45 ]
+course_status = s[ 40 : 44 ]
 
-mcc = s[ 44 : 49 ]
+mcc = s[ 44 : 48 ]
 
-mnc = s[ 48 : 51 ]
+mnc = s[ 48 : 50 ]
 
 lac = s[ 50 : 55 ]
 
-cell_id = s[ 54 : 61 ]
+cell_id = s[ 54 : 60 ]
 
-serial_no = s[ 60 : 65 ]
-
-two = s[8:10]
+serial_no = s[ 60 : 64 ]
 
 
 print('serial_no =','s[',a,':',b,']')
+
 
 print('len -',len,'__',
       'protocolno',protocolno,'__',
@@ -168,6 +167,5 @@ print('len -',len,'__',
       'lac ',lac,'__',
       'cell_id ',cell_id,'__',
       'serial_no',serial_no,'__')
-
 
 
