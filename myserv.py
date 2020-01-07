@@ -86,7 +86,7 @@ def on_new_client(clientsocket,addr):
             print('ret type - ', type(ret1))
             clientsocket.send(ret1)
 
-        elif str_data[8:10] == '13':
+        elif str_data[8:10] == '12':
             p = str_data[1::]
             p = p.replace("'", "")
             print('after', p)

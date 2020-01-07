@@ -68,6 +68,7 @@ def on_new_client(clientsocket,addr):
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 
+
 host = socket.gethostname()  # Get local machine name
 print(host)
 port = 49153  # Reserve a port for your service.
@@ -90,4 +91,10 @@ while True:
     print('got connected by ', addr)
 s.close()
 
+
+
+while False:
+    c, addr = s.accept()
+    _thread.start_new_thread(on_new_client, (c,addr))
+    print('got connected by')
 
