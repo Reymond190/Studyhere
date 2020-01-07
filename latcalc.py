@@ -20,6 +20,6 @@ def parse_dms(dms):
 
     return (lat)
 
-dd = parse_dms("78°55'44.33324'N" )
+dd = parse_dms("78°55'44.33324'N")
 
 print(dd)
