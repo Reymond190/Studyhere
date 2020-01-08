@@ -479,6 +479,7 @@ def on_new_client(clientsocket,addr):
             course = course_status_fun(course_status)
             mccans = mcc_fun(mcc)
 
+            print('date -',resdate,'lat - ',latitude,'lon - ',longitude,'speed - ',speedans,'course - ',course,'mcc - ',mccans)
 
 
 
@@ -488,13 +489,13 @@ def on_new_client(clientsocket,addr):
 
             print('len -', len, '__',
                   'protocolno', protocolno, '__',
-                  'date', resdate, '__',
+                  'date', date, '__',
                   'satellites', satellites, '__',
-                  'lat', latitude, '__',
-                  'long', longitude, '__',
-                  'speed', speedans, '__',
-                  'course_status', course, '__',
-                  'mcc ', mccans, '__',
+                  'lat', lat, '__',
+                  'long', long, '__',
+                  'speed', speed, '__',
+                  'course_status', course_status, '__',
+                  'mcc ', mcc, '__',
                   'mnc ', mnc, '__',
                   'lac ', lac, '__',
                   'cell_id ', cell_id, '__',
