@@ -2,6 +2,7 @@ import binascii
 
 lat = '089b78f8'
 
+
 def latloncalc(lat):
     if (len(lat) != 8):
         print('wrong values')
@@ -90,10 +91,6 @@ def speedcalc(value):
     print(dec)
 
 
-
-
-
-
 def course_status(value):
     # hex_to_binary('abc123efff')
     # print(binary_string)
@@ -170,7 +167,29 @@ def course_status(value):
 
 
 
+def date(value):
+    year = value[0:2]
+    month = value[2:4]
+    day = value[4:6]
+    hour = value[6:8]
+    minute = value[8:10]
+    second = value[10:12]
 
+    year = int(year, 16)
+    month = int(month, 16)
+    day = int(day, 16)
+    hour = int(hour, 16)
+    minute = int(minute, 16)
+    second = int(second, 16)
+
+
+
+    year = "20"+str(year)
+    result = str(day)+'-'+str(month)+'-'+str(year)+' '+str(hour)+':'+str(minute)+':'+str(second)
+    print('result',result)
+
+
+print(date('1401020d0c30'))
 
 
 def mcc(val):
@@ -187,67 +206,7 @@ def mcc(val):
 heartbeat = '787808134B040300010011061F0D0A'
 reqbeat = heartbeat[8:18]
 
-def status_packet(value):
 
-    my_hexdata1 = value[0:2]                #terminal information content
-    my_hexdata2 = value[2:4]                #battery/voltage level
-    my_hexdata3 = value[4:6]                #gsm signal status
-    my_hexdata4 = value[6:8]                #alarm status
-    my_hexdata5 = value[8:10]               #language
-
-
-    #---------------continue from here----------------
-
-
-    scale = 16  ## equals to hexadecimal
-    num_of_bits = 8
-
-    p = bin(int(my_hexdata1, scale))[2:].zfill(num_of_bits)
-    # q = bin(int(my_hexdata2, scale))[2:].zfill(num_of_bits)
-
-    last = p
-    count = 0
-
-    endcourse = endval
-    gpssta = ''
-    pos  = ''
-    londir = ''
-    latdir = ''
-
-
-
-
-
-    for i in last:
-        count+=1
-        if (count == 3):
-            if(i=='0'):
-                gpssta = 'real-time'
-                print('real-time gps')
-            else:
-                gpssta = 'differential positioning'
-                print('differential posttioning gps')
-        elif (count == 4):
-            if(i == '0'):
-                pos = 'not positioned'
-            else:
-                pos = 'positioned'
-
-        elif(count == 5):
-            if(i == '0'):
-                londir = 'east'
-            else:
-                londir = 'west'
-
-        elif(count == 6):
-            if(i=='0'):
-                latdir = 'south'
-            else:
-                latdir = 'north'
-
-
-    dict = {'gpsstatus':gpssta,'positioning':pos,'londirection':londir,'latdirection':latdir,'direction':endcourse}
-    print(dict)
 
 
 def status_packet(value):
