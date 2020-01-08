@@ -4,7 +4,7 @@ import binascii
 import struct
 import sys
 from crc_itu import crc16
-
+import libscrc
 
 
 def date_fun(value):
