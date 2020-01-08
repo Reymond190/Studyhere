@@ -189,8 +189,8 @@ reqbeat = heartbeat[8:18]
 
 def status_packet(value):
 
-    my_hexdata1 = value[0:2]
-    my_hexdata2 = value[2:4]                #battery status
+    my_hexdata1 = value[0:2]                #terminal information content
+    my_hexdata2 = value[2:4]                #battery/voltage level
     my_hexdata3 = value[4:6]                #gsm signal status
     my_hexdata4 = value[6:8]                #alarm status
     my_hexdata5 = value[8:10]               #language
@@ -200,27 +200,13 @@ def status_packet(value):
 
 
     scale = 16  ## equals to hexadecimal
-
     num_of_bits = 8
 
     p = bin(int(my_hexdata1, scale))[2:].zfill(num_of_bits)
-    q = bin(int(my_hexdata2, scale))[2:].zfill(num_of_bits)
-    print(p,q)
+    # q = bin(int(my_hexdata2, scale))[2:].zfill(num_of_bits)
 
-    p = str(p)
-    q = str(q)
-
-    last = p+q
-
-    print(last)
+    last = p
     count = 0
-    course = last[6:]
-
-    if(len(course)== 10):
-        endval = int(course, 2)
-    else:
-        endval = 0
-        print('check the string')
 
     endcourse = endval
     gpssta = ''
@@ -262,6 +248,184 @@ def status_packet(value):
 
     dict = {'gpsstatus':gpssta,'positioning':pos,'londirection':londir,'latdirection':latdir,'direction':endcourse}
     print(dict)
+
+
+def status_packet(value):
+
+    my_hexdata1 = value[0:2]                #terminal information content
+    my_hexdata2 = value[2:4]                #battery/voltage level
+    my_hexdata3 = value[4:6]                #gsm signal status
+    my_hexdata4 = value[6:8]                #alarm status
+    my_hexdata5 = value[8:10]               #language
+    print((my_hexdata2))
+
+    #---------------continue from here----------------
+
+
+    scale = 16  ## equals to hexadecimal
+    num_of_bits = 8
+
+    p = bin(int(my_hexdata1, scale))[2:].zfill(num_of_bits)
+    # q = bin(int(my_hexdata2, scale))[2:].zfill(num_of_bits)
+
+    print(p)
+
+    last = p
+    count = 0
+
+    # endcourse = endval
+    gpssta = ''
+    pos  = ''
+    londir = ''
+    charge = ''
+    acc = ''
+    vat = ''
+    var = ''
+
+
+
+
+    for i in last:
+        count+=1
+        if (count == 1):
+            if(i=='0'):
+                gpssta = 'gas oil and electricity connected'
+                print('gas oil and electricity')
+            else:
+                gpssta = 'oil and electricity disconnected'
+                print('oil and electricity disconnected')
+        elif (count == 2):
+            if(i == '0'):
+                pos = 'GPS tracking is off'
+            else:
+                pos = 'GPS tracking is on'
+
+        elif(count >= 3 and count <=5):
+            var += i
+            if(count == 5 and len(var) == 3):
+                if(var == '100'):
+                    londir = 'SOS'
+                elif(var == '011'):
+                    londir = 'Low Battery Alarm'
+                elif(var == '010'):
+                    londir = 'Power Cut Alarm'
+                elif (var == '001'):
+                    londir = 'Shock Alarm'
+                elif (var == '000'):
+                    londir = 'Normal'
+
+        elif(count==6):
+            if (i == '0'):
+                charge = 'Charge Off'
+            else:
+                charge = 'Charge On'
+
+        elif(count == 7):
+            if(i=='0'):
+                acc = 'ACC Low'
+            else:
+                acc = 'ACC high'
+
+        elif (count == 8):
+            if (i == '0'):
+                vat = 'Deactivated'
+            else:
+                vat = 'Activated'
+
+
+    dict = {'gpsstatus':gpssta,'GPS tracking':pos,'alarm':londir,'charge':charge,'ACC':acc,'gps':vat}
+
+    #-----------------------------------------------------------------------------------------------
+    voltval = ''
+
+    voltlev = str(my_hexdata2)
+    print('is this',voltlev)
+
+    if(voltlev == '00'):
+        #print('no power')
+        voltval = 'No Power (shutdown)'
+    elif (voltlev == '01'):
+        #print('Extremely Low Battery')
+        voltval = 'Extremely Low Battery'
+    elif (voltlev == '02'):
+        #print('Very Low Battery')
+        voltval = 'Very Low Battery'
+    elif (voltlev == '03'):
+        #print('Extremely Low Battery')
+        voltval = 'Low Battery'
+    elif (voltlev == '04'):
+        #print('Extremely Low Battery')
+        voltval = 'Medium'
+    elif (voltlev == '05'):
+        # print('Extremely Low Battery')
+        voltval = 'High'
+    elif (voltlev == '06'):
+        # print('Extremely Low Battery')
+        voltval = 'Very High'
+
+    #------------------------------------------------------------------------------------------------------------------
+    gsmlev = str(my_hexdata3)
+    gsmval = ''
+
+    if (gsmlev == '00'):
+        # print('no power')
+        gsmval = 'no signal'
+    elif (gsmlev == '01'):
+        # print('Extremely Low Battery')
+        gsmval = 'extremely weak signal'
+    elif (gsmlev == '02'):
+        # print('Very Low Battery')
+        gsmval = 'very weak signal'
+    elif (gsmlev == '03'):
+        # print('Extremely Low Battery')
+        gsmval = 'good signal'
+    elif (gsmlev == '04'):
+        # print('Extremely Low Battery')
+        gsmval = 'strong signal'
+
+    alarmlang = str(my_hexdata4)
+    alarmlang1 = str(my_hexdata4)
+    alarmlang2 = str(my_hexdata5)
+
+    #------------------------------------------
+    almmsg = ''
+
+    if (alarmlang1 == '00'):
+        # print('no power')
+        almmsg = 'normal'
+    elif (alarmlang1 == '01'):
+        # print('Extremely Low Battery')
+        almmsg = 'SOS'
+    elif (alarmlang1 == '02'):
+        # print('Very Low Battery')
+        almmsg = 'Power Cut Alarm'
+    elif (alarmlang1 == '03'):
+        # print('Extremely Low Battery')
+        almmsg = 'Shock Alarm'
+    elif (alarmlang1 == '04'):
+        # print('Extremely Low Battery')
+        almmsg = 'Fence In Alarm'
+
+    elif (alarmlang1 == '05'):
+        # print('Extremely Low Battery')
+        almmsg = 'Fence Out Alarm'
+
+
+        #break
+        almmsg2 = ''
+
+    if (alarmlang2 == '01'):
+        # print('Extremely Low Battery')
+        almmsg2 = 'Chinese'
+
+    elif (alarmlang2 == '02'):
+        # print('Extremely Low Battery')
+        almmsg2 = 'English'
+
+
+    redic = {'terminal_information':dict,'voltage level':voltval,'gsm signal strength': gsmval,'Alarm':almmsg,'language':almmsg2}
+
+    return redic
 
 
 
