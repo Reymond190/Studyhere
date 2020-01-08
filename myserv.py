@@ -458,19 +458,20 @@ def on_new_client(clientsocket,addr):
             p = p.replace("'", "")
             # print('after', p)
             s = p
-            len = s[4:7]
-            protocolno = s[6: 9]
-            date = s[8: 21]
-            satellites = s[20: 23]
-            lat = s[22: 31]
-            long = s[30: 39]
-            speed = s[38: 41]
-            course_status = s[40: 45]
-            mcc = s[44: 49]
-            mnc = s[48: 51]
-            lac = s[50: 55]
-            cell_id = s[54: 61]
-            serial_no = s[60: 65]
+
+            len = s[4:6]
+            protocolno = s[6: 8]
+            date = s[8: 20]
+            satellites = s[20: 22]
+            lat = s[22: 30]
+            long = s[30: 38]
+            speed = s[38: 40]
+            course_status = s[40: 44]
+            mcc = s[44: 48]
+            mnc = s[48: 50]
+            lac = s[50: 54]
+            cell_id = s[54: 60]
+            serial_no = s[60: 64]
 
             resdate = date_fun(date)
             latitude = latloncalc(lat)
