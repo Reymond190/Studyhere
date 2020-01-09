@@ -21,6 +21,7 @@ p = p.replace("'", "")
 print(p)
 
 
+
 s = p
 len = s[4:6]
 protocolno = s[6: 8]
@@ -38,20 +39,18 @@ serial_no = s[60: 64]
 
 
 
-
-
-
-
 print('len -', len, '__',
 'protocolno', protocolno, '__',
 'date', date, '__',
- 'satellites', satellites, '__',
- 'lat', lat, '__',
-  'long', long, '__',
-                  'speed', speed, '__',
-                  'course_status', course_status, '__',
-                  'mcc ', mcc, '__',
-                  'mnc ', mnc, '__',
-                  'lac ', lac, '__',
-                  'cell_id ', cell_id, '__',
-                  'serial_no', serial_no, '__')
+'satellites', satellites, '__',
+'lat', lat, '__',
+'long', long, '__',
+'speed', speed, '__',
+'course_status', course_status, '__',
+'mcc ', mcc, '__',
+'mnc ', mnc, '__',
+'lac ', lac, '__',
+'cell_id ', cell_id, '__',
+'serial_no', serial_no, '__')
+
+

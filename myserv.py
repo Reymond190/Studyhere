@@ -5,7 +5,7 @@ import struct
 import sys
 from crc_itu import crc16
 import libscrc
-
+import datetime
 
 def date_fun(value):
     year = value[0:2]
@@ -170,6 +170,7 @@ def status_packet(value):
 
     #------------------------------------------
     almmsg = ''
+    almmsg2 = ''
 
     if (alarmlang1 == '00'):
         # print('no power')
@@ -192,7 +193,7 @@ def status_packet(value):
         almmsg = 'Fence Out Alarm'
 
         #break
-        almmsg2 = ''
+
 
     if (alarmlang2 == '01'):
         # print('Extremely Low Battery')
@@ -203,7 +204,12 @@ def status_packet(value):
         almmsg2 = 'English'
 
 
-    redic = {'terminal_information':dict,'voltage level':voltval,'gsm signal strength': gsmval,'Alarm':almmsg,'language':almmsg2}
+    time2 = datetime.datetime.now()
+    time2 = time2.strftime("%Y-%m-%d %H:%M:%S")
+    time2 = str(time2)
+
+
+    redic = {'terminal_information':dict,'voltage level':voltval,'gsm signal strength': gsmval,'Alarm':almmsg,'language':almmsg2,'date & time':time2}
 
     return redic
 
@@ -310,6 +316,7 @@ def course_status_fun(value):
     dict = {'gpsstatus':gpssta,'positioning':pos,'londirection':londir,'latdirection':latdir,'direction':endcourse}
     print(dict)
     return dict
+
 
 def mcc_fun(val):
     dec = int(val, 16)
