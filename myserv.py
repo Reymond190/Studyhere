@@ -3,6 +3,8 @@ import _thread
 import binascii
 import struct
 import sys
+
+import pytz
 from crc_itu import crc16
 import libscrc
 import datetime
@@ -203,10 +205,11 @@ def status_packet(value):
         # print('Extremely Low Battery')
         almmsg2 = 'English'
 
-
     time2 = datetime.datetime.now()
-    time2 = time2.strftime("%Y-%m-%d %H:%M:%S")
-    time2 = str(time2)
+    tz = pytz.timezone('Asia/Kolkata')
+    time2 = time2.astimezone(tz)
+    time2 = time2.strftime("%d-%m-%Y %H:%M:%S")
+
 
 
     redic = {'terminal_information':dict,'voltage level':voltval,'gsm signal strength': gsmval,'Alarm':almmsg,'language':almmsg2,'date & time':time2}
@@ -389,13 +392,13 @@ def on_new_client(clientsocket,addr):
         imei = binascii.hexlify(data)
         imei2 = "null"
         print('data hexlified - ',imei)
-        print('type',type(imei))
-        print('data ascii ed - ',imei2)
-        print('type',type(imei2))
+        #print('type',type(imei))
+        #print('data ascii ed - ',imei2)
+        #print('type',type(imei2))
         #l = 'LOAD'
         #p = hex(crc16(imei))
         str_data = str(imei)
-        print('01',str_data[8:10])
+        #print('01',str_data[8:10])
 
         if str_data[8:10] == '01':              #login packet
                 parsed_data = str_data[26:30]
@@ -428,15 +431,15 @@ def on_new_client(clientsocket,addr):
                 ret1 = binascii.unhexlify(ret2)
                 #print('crc-',hex(crc16(ret1)))
                 print('ret - ',ret1)
-                print('ret type - ',type(ret1))
+                #print('ret type - ',type(ret1))
                 clientsocket.send(ret1)
 
         elif str_data[8:10] == '13':                    #status packet
             first_data = str_data[2:6]
             last = '0a0d'
-            print('first-data',first_data)
+            #print('first-data',first_data)
             len = '0513'
-            print('length',len)
+            #print('length',len)
             serial_no = str_data[18:22]
             print('serial_no',serial_no)
             final = len+serial_no
@@ -444,17 +447,17 @@ def on_new_client(clientsocket,addr):
             crc16 = libscrc.x25(binascii.unhexlify(re))
             ra = str(hex(crc16))
             error_check = ra[2:6]
-            print('errror_check',error_check)
+            #print('errror_check',error_check)
             finalout = first_data+final+error_check+last
-            print('final', finalout)
+            #print('final', finalout)
             ret2 = str.encode(finalout)
-            print('encode',ret2)
+            #print('encode',ret2)
             ret1 = binascii.unhexlify(ret2)
-            print('ret - ', ret1)
-            print('ret type - ', type(ret1))
+            #print('ret - ', ret1)
+            #print('ret type - ', type(ret1))
             p = str_data[1::]
             p = p.replace("'", "")
-            print('after', p)
+            #print('after', p)
             reqbeat = p[8:18]
             result = status_packet(reqbeat)
             print("result of status packet",result)
@@ -486,6 +489,8 @@ def on_new_client(clientsocket,addr):
             speedans = speedcalc(speed)
             course = course_status_fun(course_status)
             mccans = mcc_fun(mcc)
+
+
 
             print('date -',resdate,'lat - ',latitude,'lon - ',longitude,'speed - ',speedans,'course - ',course,'mcc - ',mccans)
 
